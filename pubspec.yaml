@@ -1,0 +1,35 @@
+name: ciga_process
+description: Outil de coaching psychologique Freemium (CIGA Process).
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # Packages Requis pour CIGA Process
+  cupertino_icons: ^1.0.6
+  http: ^1.2.0 
+  # Version stable corrigée pour éviter l'erreur de compilation line-height
+  pdf: ^3.11.3 
+  printing: ^5.12.0
+  shared_preferences: ^2.2.2 
+  path_provider: ^2.1.2
+  open_file: ^3.3.2
+  # Dépendance pour la validation de l'email (nécessaire pour result_screen.dart)
+  email_validator: ^2.1.2 
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/logo.png
