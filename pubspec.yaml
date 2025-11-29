@@ -1,7 +1,7 @@
-name: ciga_process
-description: Outil de coaching psychologique Freemium (CIGA Process).
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+name: ciga_process_app
+description: Application de Diagnostic et de Plan d'Action Synergie Évolutive.
 
+# La ligne suivante sélectionne la version de l'application
 version: 1.0.0+1
 
 environment:
@@ -10,26 +10,35 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # Dépendances essentielles
+  cupertino_icons: ^1.0.2
+
+  # Dépendances pour l'API (result_screen.dart)
+  http: ^1.1.0 # Pour les appels HTTP à l'API OpenAI et au Webhook
   
-  # Packages Requis pour CIGA Process
-  cupertino_icons: ^1.0.6
-  http: ^1.2.0 
-  # Version stable corrigée pour éviter l'erreur de compilation line-height
-  # pdf: ^3.11.3  <-- NEUTRALISÉ
-  # printing: ^5.12.0  <-- NEUTRALISÉ
-  shared_preferences: ^2.2.2 
-  path_provider: ^2.1.2
-  open_file: ^3.3.2
-  # Dépendance pour la validation de l'email (nécessaire pour result_screen.dart)
-  email_validator: ^2.1.2 
+  # Dépendance pour la validation d'email (result_screen.dart)
+  email_validator: ^2.1.18
+
+  # Dépendance pour la gestion des données locales (result_screen.dart)
+  shared_preferences: ^2.2.2
+
+  # 🚀 NOUVELLES DÉPENDANCES pour la génération et le partage de PDF (pdf_service.dart)
+  pdf: ^3.10.8         # Pour la création du document PDF
+  printing: ^5.11.1      # Pour imprimer et partager le PDF (dépendance optionnelle souvent liée)
+  path_provider: ^2.1.1  # Pour obtenir un chemin de fichier sur l'appareil (sauvegarde)
+  open_file: ^3.3.2      # Pour ouvrir le fichier PDF après sa création
   
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^2.0.0
 
+# La section flutter est essentielle pour l'intégration des assets (images)
 flutter:
   uses-material-design: true
 
+  # 🖼️ DÉCLARATION DES ASSETS (Logo nécessaire pour pdf_service.dart)
   assets:
     - assets/logo.png
+    # Si d'autres assets sont utilisés, ils doivent être listés ici.

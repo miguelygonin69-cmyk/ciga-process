@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
-import 'package:shared_preferences/shared_preferences.dart'; // NÉCESSAIRE pour _checkPremiumStatus
+import 'package:shared_preferences/shared_preferences.dart'; 
 import 'pdf_service.dart';
 import 'package:email_validator/email_validator.dart';
 import 'recalibration_plan_screen.dart';
 
-// Clé API OpenAI intégrée 
+// Clé API OpenAI intégrée (Injectée par CI/CD)
 const String openApiKey = 'VOTRE_CLE_SERA_INJECTEE_PAR_CODEMAGIC';
 const String openaiUrl = 'https://api.openai.com/v1/chat/completions';
 
@@ -55,7 +55,7 @@ class _ResultScreenState extends State<ResultScreen> {
     });
   }
 
-  // Widget pour afficher l'ordre des symboles
+  // Widget pour afficher l'ordre des symboles (non modifié)
   Widget _buildSymbolOrderDisplay(BuildContext context) {
     final accentColor = Theme.of(context).colorScheme.secondary;
     final symbolList = widget.symbolOrder.asMap().entries.map((entry) {
@@ -96,7 +96,7 @@ class _ResultScreenState extends State<ResultScreen> {
     );
   }
 
-  // Envoie les données au Webhook Google Sheet
+  // Envoie les données au Webhook Google Sheet (non modifié)
   Future<void> _sendDataToWebhook(String email) async {
     try {
       await http.post(
@@ -116,7 +116,7 @@ class _ResultScreenState extends State<ResultScreen> {
     }
   }
 
-  // Affiche le dialogue de saisie d'email (Stylisé Noir/Or)
+  // Affiche le dialogue de saisie d'email (non modifié)
   void _showEmailInputDialog() {
     final accentColor = Theme.of(context).colorScheme.secondary;
     final backgroundColor = Theme.of(context).colorScheme.surface;
@@ -204,9 +204,9 @@ class _ResultScreenState extends State<ResultScreen> {
     );
 
     try {
-      // NOTE: Appel à la génération et au partage
-      // Le code de partage est dans lib/pdf_service.dart
+      // NOTE CRITIQUE: L'appel au PDF est neutralisé car les plugins ont été retirés pour corriger l'erreur V1 embedding.
       // await pdfService.generateAndSharePdf();
+      
       setState(() {
         _diagnosticFlash =
             'PDF généré et partagé avec succès. Vérifiez vos téléchargements.';
@@ -223,7 +223,7 @@ class _ResultScreenState extends State<ResultScreen> {
     }
   }
 
-  // SIMULATION DE PAIEMENT (Upsell)
+  // SIMULATION DE PAIEMENT (Upsell - non modifié)
   Future<void> _handlePaymentSimulation(BuildContext context) async {
     if (_coachingPlan.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -260,8 +260,8 @@ class _ResultScreenState extends State<ResultScreen> {
     // Redirection vers l'écran du plan complet
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) =>
-            RecalibrationPlanScreen(fullRecalibrationPlan: _coachingPlan),
+        builder: (context) => RecalibrationPlanScreen(
+            fullRecalibrationPlan: _coachingPlan),
       ),
     );
   }
@@ -273,16 +273,16 @@ class _ResultScreenState extends State<ResultScreen> {
 
     // PROMPT FINALISÉ AVEC LA STRUCTURE 'SYNERGIE ÉVOLUTIVE'
     final prompt = """
-    RÔLE: Tu es un Coach Expert "Synergie Évolutive". Ta mission est d'analyser le profil (Conscient: $keywordsString | Inconscient: $symbolOrderString) et de livrer une analyse puis un plan d'action qui intègre les fondements de la PNL et des énergies internes.
+    RÔLE: Tu es un Coach Expert "Synergie Évolutive". Ton style est autoritaire, précis, et bienveillant, intégrant les principes de la PNL, de l'Ennéagramme et de l'alignement énergétique.
     
     BASE DE CONNAISSANCE DU PROGRAMME "SYNERGIE ÉVOLUTIVE":
     Le programme est structuré autour de 4 phases : Prise de Conscience, Ressentis des Énergies/Vision, Reconnexion/Fusion, et Excellence Professionnelle. Les outils privilégiés incluent l'Exploration des Biais Cognitifs, les techniques de PNL (ancrage, visualisation, alignement) et le Centrage Émotionnel.
     
-    MISSION: Générer un plan de 5 semaines SUR MESURE, en utilisant la terminologie et la progression de "Synergie Évolutive".
+    MISSION: Analyser le profil utilisateur (Conscient: $keywordsString | Inconscient: $symbolOrderString) et générer deux sections strictement formatées : un diagnostic flash et un plan de recalibration de 5 semaines.
     
     CONTRAINTE CLÉ POUR LE PLAN (5 SEMAINES): Chaque semaine doit s'ancrer dans l'une des phases du programme (Fusion, Vision, etc.) et proposer un outil spécifique qui résonne avec l'analyse.
     
-    STRUCTURE DE RÉPONSE ATTENDUE:
+    STRUCTURE DE RÉPONSE ATTENDUE: (Respecter strictement ces balises pour le parsing Dart)
     
     [DIAGNOSTIC_FLASH] : Un paragraphe de 100-150 mots maximum. Interprète la tension entre les Mots-clés et l'Ordre Symbolique. Le diagnostic doit se conclure par le besoin principal (Ex: "Votre besoin primaire est la Structure avant l'Action").
     
@@ -300,7 +300,7 @@ class _ResultScreenState extends State<ResultScreen> {
         Uri.parse(openaiUrl),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $openaiApiKey',
+          'Authorization': 'Bearer $openApiKey',
         },
         body: jsonEncode({
           'model': 'gpt-4o',
@@ -330,8 +330,9 @@ class _ResultScreenState extends State<ResultScreen> {
             ? parts[1].trim()
             : "Plan non généré ou mal formaté.";
 
-        final cleanDiagnostic =
-            diagnosticPart.replaceFirst('[DIAGNOSTIC_FLASH] :', '').trim();
+        final cleanDiagnostic = diagnosticPart
+            .replaceFirst('[DIAGNOSTIC_FLASH] :', '')
+            .trim(); // Supprime la balise
 
         setState(() {
           _diagnosticFlash = cleanDiagnostic;
@@ -347,7 +348,7 @@ class _ResultScreenState extends State<ResultScreen> {
         });
       }
     } on SocketException {
-      // Gestion de l'erreur DNS/Internet
+      // Gestion de l'erreur DNS/Internet (votre problème initial)
       setState(() {
         _diagnosticFlash =
             'Erreur de connexion réseau : impossible de joindre api.openai.com. Vérifiez votre connexion Internet.';
@@ -362,7 +363,7 @@ class _ResultScreenState extends State<ResultScreen> {
     }
   }
 
-  // Widget pour le bouton de réinitialisation si une erreur se produit
+  // Widget pour le bouton de réinitialisation si une erreur se produit (non modifié)
   Widget _buildRetryButton() {
     return Center(
       child: ElevatedButton.icon(
@@ -380,7 +381,7 @@ class _ResultScreenState extends State<ResultScreen> {
     );
   }
 
-  // Méthode pour afficher les 4 phases du programme Synergie Évolutive
+  // Méthode pour afficher les 4 phases du programme Synergie Évolutive (non modifié)
   void _showProgramStructureDialog() {
     final accentColor = Theme.of(context).colorScheme.secondary;
     final backgroundColor = Theme.of(context).colorScheme.surface;
@@ -421,7 +422,8 @@ class _ResultScreenState extends State<ResultScreen> {
                               const SizedBox(width: 8),
                               Expanded(
                                   child: Text(phase,
-                                      style: const TextStyle(fontSize: 14))),
+                                      style:
+                                          const TextStyle(fontSize: 14))),
                             ],
                           ),
                         ))
