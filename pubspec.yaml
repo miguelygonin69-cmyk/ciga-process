@@ -5,44 +5,35 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-flutter:
-sdk: flutter
+  # Dépendances essentielles
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  
+  # Dépendances pour l'API, la validation, et le stockage
+  http: ^1.1.0
 
-Dépendances essentielles
+  # CORRECTION CRITIQUE : La version a été abaissée de ^2.1.18 à ^2.1.17 pour résoudre le conflit.
+  email_validator: ^2.1.17
+  shared_preferences: ^2.2.2
 
-cupertino_icons: ^1.0.2
-
-Dépendances pour l'API, la validation, et le stockage
-
-http: ^1.1.0
-
-CORRECTION CRITIQUE : La version a été abaissée de ^2.1.18 à ^2.1.17 pour résoudre le conflit.
-
-email_validator: ^2.1.17
-shared_preferences: ^2.2.2
-
-🚀 Dépendances pour la génération et le partage de PDF
-
-pdf: ^3.10.8
-
-printing: ^5.11.1
-
-path_provider: ^2.1.1
-
-open_file: ^3.3.2
+  # 🚀 Dépendances pour la génération et le partage de PDF
+  pdf: ^3.10.8
+  printing: ^5.11.1
+  path_provider: ^2.1.1
+  open_file: ^3.3.2
 
 dev_dependencies:
-flutter_test:
-sdk: flutter
-flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
 
 flutter:
-uses-material-design: true
+  uses-material-design: true
 
-🖼️ Déclaration des Assets
-
-assets:
-- assets/logo.png
+  # 🖼️ Déclaration des Assets
+  assets:
+    - assets/logo.png
