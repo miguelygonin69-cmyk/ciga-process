@@ -1,44 +1,48 @@
 name: ciga_process_app
 description: Application de Diagnostic et de Plan d'Action Synergie Évolutive.
+publish_to: 'none'
 
-# La ligne suivante sélectionne la version de l'application
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  flutter:
-    sdk: flutter
-
-  # Dépendances essentielles
-  cupertino_icons: ^1.0.2
-
-  # Dépendances pour l'API (result_screen.dart)
-  http: ^1.1.0 # Pour les appels HTTP à l'API OpenAI et au Webhook
-  
-  # Dépendance pour la validation d'email (result_screen.dart)
-  email_validator: ^2.1.18
-
-  # Dépendance pour la gestion des données locales (result_screen.dart)
-  shared_preferences: ^2.2.2
-
-  # 🚀 NOUVELLES DÉPENDANCES pour la génération et le partage de PDF (pdf_service.dart)
-  pdf: ^3.10.8         # Pour la création du document PDF
-  printing: ^5.11.1      # Pour imprimer et partager le PDF (dépendance optionnelle souvent liée)
-  path_provider: ^2.1.1  # Pour obtenir un chemin de fichier sur l'appareil (sauvegarde)
-  open_file: ^3.3.2      # Pour ouvrir le fichier PDF après sa création
-  
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^2.0.0
-
-# La section flutter est essentielle pour l'intégration des assets (images)
 flutter:
-  uses-material-design: true
+sdk: flutter
 
-  # 🖼️ DÉCLARATION DES ASSETS (Logo nécessaire pour pdf_service.dart)
-  assets:
-    - assets/logo.png
-    # Si d'autres assets sont utilisés, ils doivent être listés ici.
+Dépendances essentielles
+
+cupertino_icons: ^1.0.2
+
+Dépendances pour l'API, la validation, et le stockage
+
+http: ^1.1.0
+
+CORRECTION CRITIQUE : La version a été abaissée de ^2.1.18 à ^2.1.17
+
+email_validator: ^2.1.17
+shared_preferences: ^2.2.2
+
+🚀 Dépendances pour la génération et le partage de PDF
+
+pdf: ^3.10.8
+
+printing: ^5.11.1
+
+path_provider: ^2.1.1
+
+open_file: ^3.3.2
+
+dev_dependencies:
+flutter_test:
+sdk: flutter
+flutter_lints: ^2.0.0
+
+flutter:
+uses-material-design: true
+
+🖼️ Déclaration des Assets
+
+assets:
+- assets/logo.png
