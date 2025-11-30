@@ -19,7 +19,7 @@ Dépendances pour l'API, la validation, et le stockage
 
 http: ^1.1.0
 
-CORRECTION CRITIQUE : La version a été abaissée de ^2.1.18 à ^2.1.17
+CORRECTION CRITIQUE : La version a été abaissée de ^2.1.18 à ^2.1.17 pour résoudre le conflit.
 
 email_validator: ^2.1.17
 shared_preferences: ^2.2.2
