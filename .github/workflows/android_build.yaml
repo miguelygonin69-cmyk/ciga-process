@@ -17,10 +17,10 @@ jobs:
 
     steps:
       - name: ⬇️ Checkout du Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 🔧 Configuration Java (Requis par Android SDK)
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '17' 
@@ -46,7 +46,7 @@ jobs:
         run: flutter build apk --release
 
       - name: ⬆️ Archive de l'APK (Artifact)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ciga_process_app_apk
           path: build/app/outputs/flutter-apk/app-release.apk
